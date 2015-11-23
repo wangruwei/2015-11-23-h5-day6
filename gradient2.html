@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    #box {
+        width: 500px;
+        height: 30px;
+        margin: 100px auto;
+        position: relative;
+        overflow: hidden;
+        left: 0;
+        top: 0;
+        border-radius: 15px;
+    }
+    #bar {
+        width: 1200px;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: -webkit-repeating-linear-gradient(-45deg,green,green 10px,red 10px,red 20px);
+    }
+    </style>
+    <script>
+    'use strict';
+    window.onload = function(){
+        var oBox = document.querySelector('#box');
+        var oBar = document.querySelector('#bar');
+        var left = 0;
+        setInterval(function(){
+            left -= 5;
+            oBar.style.WebkitTransform = 'translateX('+left+'px)';
+            if(left<=-593)left=0;
+        },30);
+    };
+    </script>
+</head>
+<body>
+    <div id="box">
+        <span id="bar"></span>
+    </div>
+</body>
+</html>
