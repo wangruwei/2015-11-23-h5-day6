@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>fileDrag</title>
+	<style> 
+	#box {
+		width: 500px;
+		height: 300px;
+		border: 1px solid #000;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		margin-left: -250px;
+		margin-top: -250px;
+		text-align: center;
+		line-height: 300px;
+		font-size: 40px;
+		display: none;
+	}
+	textarea {
+		width: 400px;
+		height: 250px;
+	}
+	#bar {
+		width: 200px;
+		height: 30px;
+		border: 1px solid #999;
+		padding: 2px;
+		box-sizing: border-box;
+	}
+	#bar span {
+		width: 0;
+		display: block;
+		height: 100%;
+		background: #5FE382;
+	}
+	</style>
+	<script>
+	'use strict';
+	window.onload = function(){
+		var oBox = document.querySelector('#box');
+		var oTxt = document.querySelector('textarea');
+		var oStrong = document.querySelector('strong');
+		var oBar = document.querySelector('#bar');
+		var oS = document.querySelector('span');
+		var timer = null;
+		oBox.ondragenter = function(){
+			this.innerHTML = '释放鼠标';
+		};
+		oBox.ondragleave = function(){
+			this.innerHTML = '请将文件拖拽至此处';
+		};
+		oBox.ondragover = function(){
+			return false;
+			//如果不加，drop时候还是会打开文件
+		};
+		oBox.ondrop = function(ev){
+			var oFile = ev.dataTransfer.files[0];
+			oStrong.innerHTML = oFile.name+'-'+oFile.size+'KB-'+oFile.type;
+			var reader = new FileReader();
+			//reader.readAsText(oFile);
+			reader.readAsDataURL(oFile);
+			reader.onload = function(){
+				oTxt.value = reader.result;
+			};
+			reader.onprogress = function(ev){
+				var scale = ev.loaded/ev.total;
+				oS.style.width = scale*100+'%';
+				if(scale==1)alert('上传完成');
+			};
+			return false;
+		};
+		document.ondragover = function(){
+			oBox.style.display = 'block';
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				oBox.style.display = 'none';
+			},100);
+		};
+	};
+	</script>
+</head>
+<body>
+	<textarea></textarea>
+	<strong></strong><br/>
+	<div id="bar">
+		<span></span>
+	</div>
+	<div id="box">请将文件拖拽至此处</div>
+</body>
+</html>

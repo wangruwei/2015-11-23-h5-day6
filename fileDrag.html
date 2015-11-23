@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>fileDrag</title>
+	<style> 
+	#box {
+		width: 500px;
+		height: 300px;
+		border: 1px solid #000;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		margin-left: -250px;
+		margin-top: -250px;
+		text-align: center;
+		line-height: 300px;
+		font-size: 40px;
+		display: none;
+	}
+	textarea {
+		width: 400px;
+		height: 250px;
+	}
+	</style>
+	<script>
+	'use strict';
+	window.onload = function(){
+		var oBox = document.querySelector('#box');
+		var oTxt = document.querySelector('textarea');
+		var timer = null;
+		oBox.ondragenter = function(){
+			this.innerHTML = '释放鼠标';
+		};
+		oBox.ondragleave = function(){
+			this.innerHTML = '请将文件拖拽至此处';
+		};
+		oBox.ondragover = function(){
+			return false;
+			//如果不加，drop时候还是会打开文件
+		};
+		oBox.ondrop = function(ev){
+			var oFile = ev.dataTransfer.files[0];
+			var reader = new FileReader();
+			reader.readAsText(oFile);
+			reader.onload = function(){
+				oTxt.value = reader.result;
+			};
+			return false;
+		};
+		document.ondragover = function(){
+			oBox.style.display = 'block';
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				oBox.style.display = 'none';
+			},100);
+		};
+	};
+	</script>
+</head>
+<body>
+	<textarea></textarea>
+	<div id="box">请将文件拖拽至此处</div>
+</body>
+</html>
