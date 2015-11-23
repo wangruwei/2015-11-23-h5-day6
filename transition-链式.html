@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>transition</title>
+    <style>
+    #box {
+        width: 200px;
+        height: 200px;
+        background: #0f9;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    </style>
+    <script>
+    'use strict';
+    window.onload = function(){
+        var oBox = document.getElementById('box');
+        oBox.onclick = function(){
+            move(this,{width: '300px',height: '300px',left: '400px'},{duration: 300,timing:'linear',end: function(){
+                move(oBox,{top: '200px'});
+            }});
+        };
+        function move(obj,json,options){
+            options = options||{};
+            options.duration = options.duration||800;
+            options.timing = options.timing||'linear';
+            obj.style.WebkitTransition = options.duration+'ms all '+options.timing;
+            for(var name in json){
+                obj.style[name] = json[name];
+            }
+            function fn(){
+                obj.removeEventListener('transitionend',fn,false);
+                options.end&&options.end();
+            }
+            obj.addEventListener('transitionend',fn,false);
+        }
+    };
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>

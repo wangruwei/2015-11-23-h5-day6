@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>animation</title>
+    <style>
+    @-webkit-keyframes move {
+        25% {
+            left: 500px;
+            top: 0;
+            -webkit-transform: rotateZ(90deg);
+            -ms-transform: rotateZ(90deg);
+            -o-transform: rotateZ(90deg);
+            transform: rotateZ(90deg);
+        }
+        50% {
+            left: 500px;
+            top: 400px;
+            -webkit-transform: rotateZ(180deg);
+            -ms-transform: rotateZ(180deg);
+            -o-transform: rotateZ(180deg);
+            transform: rotateZ(180deg);
+        }
+        75% {
+            left: 0;
+            top: 400px;
+            -webkit-transform: rotateZ(270deg);
+            -ms-transform: rotateZ(270deg);
+            -o-transform: rotateZ(270deg);
+            transform: rotateZ(270deg);
+        }
+    }
+    #box {
+        width: 200px;
+        height: 200px;
+        background: #0f9;
+        left: 0;
+        top: 0;
+        font-size: 30px;
+        text-align: center;
+        line-height: 200px;
+        position: absolute;
+        -webkit-animation-name: move;
+        -o-animation-name: move;
+        animation-name: move;
+        -webkit-animation-duration: 3s;
+        -o-animation-duration: 3s;
+        animation-duration: 3s;
+        -webkit-animation-iteration-count: infinite;
+        -o-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+    }
+    </style>
+</head>
+<body>
+    <div id="box">Hello</div>
+</body>
+</html>
